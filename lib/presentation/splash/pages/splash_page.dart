@@ -16,40 +16,52 @@ class SplashPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(50),
-                child: Shimmer(
-                  color: AppColors.primaryOrange,
-                  duration: Duration(seconds: 2),
-                  child: Image.asset("lib/assets/images/rootx_logo.jpg"),
-                ),
-              ),
+              _buildLogo(),
               const SizedBox(height: 14),
-              Shimmer(
-                color: AppColors.primaryWhite,
-                duration: Duration(seconds: 1),
-                child: Text(
-                  "RootX Software Todo App",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryOrange,
-                  ),
-                ),
-              ),
+              _buildSplashText(),
               const SizedBox(height: 16),
-              SizedBox(
-                width: Get.width / 1.5,
-                child: LinearProgressIndicator(
-                  color: AppColors.primaryOrange,
-                  borderRadius: BorderRadius.circular(25),
-                  minHeight: 5,
-                  backgroundColor: AppColors.primaryWhite,
-                ),
-              ),
+              _buildLoadingIndecator(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  SizedBox _buildLoadingIndecator() {
+    return SizedBox(
+      width: Get.width / 1.5,
+      child: LinearProgressIndicator(
+        color: AppColors.primaryOrange,
+        borderRadius: BorderRadius.circular(25),
+        minHeight: 5,
+        backgroundColor: AppColors.primaryWhite,
+      ),
+    );
+  }
+
+  Shimmer _buildSplashText() {
+    return Shimmer(
+      color: AppColors.primaryOrange,
+      duration: Duration(seconds: 1),
+      child: Text(
+        "RootX Software Todo App",
+        style: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: AppColors.primaryWhite,
+        ),
+      ),
+    );
+  }
+
+  ClipRRect _buildLogo() {
+    return ClipRRect(
+      borderRadius: BorderRadiusGeometry.circular(50),
+      child: Shimmer(
+        color: AppColors.primaryOrange,
+        duration: Duration(seconds: 2),
+        child: Image.asset("lib/assets/images/rootx_logo.jpg"),
       ),
     );
   }

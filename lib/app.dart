@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:rootxsoftware_todo_app/controller_binders.dart';
 import 'package:rootxsoftware_todo_app/routes/app_pages.dart';
 import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
+import 'package:rootxsoftware_todo_app/theme/app_theme.dart';
 
-import 'theme/app_colors.dart';
 
 class RootXSoftwareTODO extends StatelessWidget {
   const RootXSoftwareTODO({super.key});
@@ -16,7 +16,7 @@ class RootXSoftwareTODO extends StatelessWidget {
       initialBinding: ControllerBinders(),
       getPages: AppPages.pages,
       initialRoute: AppRoutes.splashRoute,
-      theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryDark),
+      theme: AppTheme.getThemeData,
     );
   }
 }
