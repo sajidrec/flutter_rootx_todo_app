@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rootxsoftware_todo_app/presentation/create_update_task/controllers/create_update_controller.dart';
+import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 
 import '../../../models/todo_model.dart';
+import '../../splash/controllers/splash_screen_controller.dart';
 
 class CreateUpdateTaskPage extends StatefulWidget {
   const CreateUpdateTaskPage({
@@ -106,14 +108,16 @@ class _CreateUpdateTaskPageState extends State<CreateUpdateTaskPage> {
                                         isDone: false,
                                       ),
                                     );
-                                    Get.back();
+
+                                    Get.offAllNamed(AppRoutes.homeRoute);
                                   } else {
                                     await controller.updateTodo(
                                       index: widget.index,
                                       newTitle: _titleTEC.text,
                                       newDescription: _descriptionTEC.text,
                                     );
-                                    Get.back();
+
+                                    Get.offAllNamed(AppRoutes.homeRoute);
                                   }
                                 }
                               },

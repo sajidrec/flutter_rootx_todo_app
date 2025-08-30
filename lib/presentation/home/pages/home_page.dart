@@ -5,16 +5,26 @@ import 'package:rootxsoftware_todo_app/presentation/home/controllers/checkbox_co
 import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.todoList});
+import '../../splash/controllers/splash_screen_controller.dart';
 
-  final List<TodoModel> todoList;
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    _initialPageSetup();
+  }
+
+  Future<void> _initialPageSetup() async {
+    await Get.find<SplashScreenController>().fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,17 +39,22 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ListView.separated(
-                primary: false,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => _buildTask(
-                  taskDescription: widget.todoList[index].description ?? "",
-                  taskTitle: widget.todoList[index].title ?? "",
-                  index: index,
-                ),
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 10),
-                itemCount: widget.todoList.length,
+              GetBuilder<SplashScreenController>(
+                builder: (controller) {
+                  return ListView.separated(
+                    primary: false,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => _buildTask(
+                      taskDescription:
+                          controller.todoList[index].description ?? "",
+                      taskTitle: controller.todoList[index].title ?? "",
+                      index: index,
+                    ),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
+                    itemCount: controller.todoList.length,
+                  );
+                },
               ),
 
               const SizedBox(height: 100),
@@ -136,7 +151,7 @@ class _HomePageState extends State<HomePage> {
             "buttonText": "Update",
             "titleText": taskTitle,
             "descriptionText": taskDescription,
-            "index": index,
+            "index": index ?? 0,
           },
         );
       },
@@ -188,6 +203,7 @@ class _HomePageState extends State<HomePage> {
               "buttonText": "Create",
               "titleText": "",
               "descriptionText": "",
+              "index": 0,
             },
           );
         },

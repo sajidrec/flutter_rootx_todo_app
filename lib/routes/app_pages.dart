@@ -7,10 +7,7 @@ import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 class AppPages {
   static final List<GetPage> pages = [
     GetPage(name: AppRoutes.splashRoute, page: () => SplashPage()),
-    GetPage(
-      name: AppRoutes.homeRoute,
-      page: () => HomePage(todoList: Get.arguments["todoList"]),
-    ),
+    GetPage(name: AppRoutes.homeRoute, page: () => HomePage()),
     GetPage(
       name: AppRoutes.createUpdateRoute,
       page: () => CreateUpdateTaskPage(
