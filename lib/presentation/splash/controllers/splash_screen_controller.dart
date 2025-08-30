@@ -11,6 +11,8 @@ class SplashScreenController extends GetxController {
 
     var temp = box.values.map((e) => Map<String, dynamic>.from(e)).toList();
 
+    todoList = [];
+
     for (var element in temp) {
       todoList.add(
         TodoModel(
@@ -23,6 +25,7 @@ class SplashScreenController extends GetxController {
 
     update();
   }
+
 
   Future<void> delete({required int index}) async {
     final box = Hive.box("todo");

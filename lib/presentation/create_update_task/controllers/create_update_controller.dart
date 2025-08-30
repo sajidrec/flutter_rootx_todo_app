@@ -31,9 +31,4 @@ class CreateUpdateController extends GetxController {
     todo['description'] = newDescription;
     await box.putAt(index, todo);
   }
-
-  Future<void> delete({required int index}) async {
-    final box = await Hive.openBox("todo");
-    await box.deleteAt(index);
-  }
 }
