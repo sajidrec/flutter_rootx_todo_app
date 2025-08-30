@@ -5,7 +5,6 @@ import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 
 import '../../../models/todo_model.dart';
-import '../../splash/controllers/splash_screen_controller.dart';
 
 class CreateUpdateTaskPage extends StatefulWidget {
   const CreateUpdateTaskPage({
