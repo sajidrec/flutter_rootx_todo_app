@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rootxsoftware_todo_app/presentation/home/controllers/checkbox_controller.dart';
+import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 
 class HomePage extends StatelessWidget {
@@ -106,7 +107,12 @@ class HomePage extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: InkWell(
         customBorder: CircleBorder(),
-        onTap: () {},
+        onTap: () {
+          Get.toNamed(
+            AppRoutes.createUpdateRoute,
+            arguments: {"appbarTitle": "Create New Todo"},
+          );
+        },
         child: CircleAvatar(
           maxRadius: 30,
           backgroundColor: AppColors.primaryWhite,
