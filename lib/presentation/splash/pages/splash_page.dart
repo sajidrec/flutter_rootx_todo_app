@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+    _initialPageSetup();
+  }
+
+  Future<void> _initialPageSetup() async {
+    await Future.delayed(Duration(seconds: 2));
+    Get.offAllNamed(AppRoutes.homeRoute);
+  }
 
   @override
   Widget build(BuildContext context) {
