@@ -107,7 +107,6 @@ class _CreateUpdateTaskPageState extends State<CreateUpdateTaskPage> {
                                         isDone: false,
                                       ),
                                     );
-
                                     Get.offAllNamed(AppRoutes.homeRoute);
                                   } else {
                                     await controller.updateTodo(
@@ -115,7 +114,6 @@ class _CreateUpdateTaskPageState extends State<CreateUpdateTaskPage> {
                                       newTitle: _titleTEC.text,
                                       newDescription: _descriptionTEC.text,
                                     );
-
                                     Get.offAllNamed(AppRoutes.homeRoute);
                                   }
                                 }

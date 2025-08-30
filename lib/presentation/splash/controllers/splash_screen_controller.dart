@@ -23,4 +23,13 @@ class SplashScreenController extends GetxController {
 
     update();
   }
+
+  Future<void> delete({required int index}) async {
+    final box = Hive.box("todo");
+
+    await box.deleteAt(index);
+    todoList.removeAt(index);
+
+    update();
+  }
 }

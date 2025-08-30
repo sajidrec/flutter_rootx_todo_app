@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:rootxsoftware_todo_app/presentation/create_update_task/controllers/create_update_controller.dart';
 import 'package:rootxsoftware_todo_app/presentation/home/controllers/checkbox_controller.dart';
 import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildDeleteButton(),
+          _buildDeleteButton(index: index),
           _buildEditButton(taskTitle, taskDescription, index),
           _buildViewButton(taskDescription),
         ],
@@ -150,7 +152,7 @@ class _HomePageState extends State<HomePage> {
             "buttonText": "Update",
             "titleText": taskTitle,
             "descriptionText": taskDescription,
-            "index": index ?? 0,
+            "index": index,
           },
         );
       },
@@ -158,7 +160,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  IconButton _buildDeleteButton() {
+  IconButton _buildDeleteButton({required int index}) {
     return IconButton(
       onPressed: () {
         Get.defaultDialog(
@@ -176,8 +178,8 @@ class _HomePageState extends State<HomePage> {
           confirmTextColor: AppColors.primaryWhite,
           buttonColor: AppColors.primaryOrange,
           radius: 12,
-          onConfirm: () {
-            // perform delete action here
+          onConfirm: () async {
+            await Get.find<SplashScreenController>().delete(index: index);
             Get.back(); // close dialog
           },
           onCancel: () {
