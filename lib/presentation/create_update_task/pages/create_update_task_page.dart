@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rootxsoftware_todo_app/presentation/create_update_task/controllers/create_update_controller.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
+
+import '../../../models/todo_model.dart';
 
 class CreateUpdateTaskPage extends StatefulWidget {
   const CreateUpdateTaskPage({
@@ -8,7 +12,11 @@ class CreateUpdateTaskPage extends StatefulWidget {
     required this.buttonText,
     required this.titleText,
     required this.descriptionText,
+
+    required this.index,
   });
+
+  final int index;
 
   final String appbarTitle;
   final String buttonText;
@@ -81,19 +89,43 @@ class _CreateUpdateTaskPageState extends State<CreateUpdateTaskPage> {
                       const SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryOrange,
-                            foregroundColor: AppColors.primaryWhite,
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            widget.buttonText,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        child: GetBuilder<CreateUpdateController>(
+                          builder: (controller) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryOrange,
+                                foregroundColor: AppColors.primaryWhite,
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  if (widget.buttonText == "Create") {
+                                    await controller.addTodo(
+                                      todo: TodoModel(
+                                        title: _titleTEC.text,
+                                        description: _descriptionTEC.text,
+                                        isDone: false,
+                                      ),
+                                    );
+                                    Get.back();
+                                  } else {
+                                    await controller.updateTodo(
+                                      index: widget.index,
+                                      newTitle: _titleTEC.text,
+                                      newDescription: _descriptionTEC.text,
+                                    );
+                                    Get.back();
+                                  }
+                                }
+                              },
+                              child: Text(
+                                widget.buttonText,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],

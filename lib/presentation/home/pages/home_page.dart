@@ -4,9 +4,14 @@ import 'package:rootxsoftware_todo_app/presentation/home/controllers/checkbox_co
 import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,10 +32,11 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (context, index) => _buildTask(
                   taskDescription: "Description",
                   taskTitle: 'Task 1',
+                  index: index,
                 ),
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 10),
-                itemCount: 1,
+                itemCount: 10,
               ),
 
               const SizedBox(height: 100),
@@ -45,6 +51,7 @@ class HomePage extends StatelessWidget {
   ListTile _buildTask({
     String taskDescription = "",
     required String taskTitle,
+    required int index,
   }) {
     return ListTile(
       leading: GetBuilder<CheckboxController>(
@@ -82,7 +89,7 @@ class HomePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildDeleteButton(),
-          _buildEditButton(taskTitle, taskDescription),
+          _buildEditButton(taskTitle, taskDescription, index),
           _buildViewButton(taskDescription),
         ],
       ),
@@ -112,7 +119,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  IconButton _buildEditButton(String taskTitle, String taskDescription) {
+  IconButton _buildEditButton(
+    String taskTitle,
+    String taskDescription,
+    int index,
+  ) {
     return IconButton(
       onPressed: () {
         Get.toNamed(
@@ -122,6 +133,7 @@ class HomePage extends StatelessWidget {
             "buttonText": "Update",
             "titleText": taskTitle,
             "descriptionText": taskDescription,
+            "index": index,
           },
         );
       },

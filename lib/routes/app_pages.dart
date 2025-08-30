@@ -15,6 +15,7 @@ class AppPages {
         buttonText: Get.arguments['buttonText'],
         titleText: Get.arguments['titleText'],
         descriptionText: Get.arguments['descriptionText'],
+        index: Get.arguments['index'],
       ),
     ),
   ];
