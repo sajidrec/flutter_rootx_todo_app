@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rootxsoftware_todo_app/models/todo_model.dart';
 import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
@@ -20,7 +21,14 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> _initialPageSetup() async {
     await Future.delayed(Duration(seconds: 2));
-    Get.offAllNamed(AppRoutes.homeRoute);
+    Get.offAllNamed(
+      AppRoutes.homeRoute,
+      arguments: {
+        "todoList": [
+          TodoModel(title: "sajid", description: "hahah", isDone: true),
+        ],
+      },
+    );
   }
 
   @override

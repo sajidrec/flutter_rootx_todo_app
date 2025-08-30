@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rootxsoftware_todo_app/models/todo_model.dart';
 import 'package:rootxsoftware_todo_app/presentation/home/controllers/checkbox_controller.dart';
 import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.todoList});
+
+  final List<TodoModel> todoList;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -30,13 +33,13 @@ class _HomePageState extends State<HomePage> {
                 primary: false,
                 shrinkWrap: true,
                 itemBuilder: (context, index) => _buildTask(
-                  taskDescription: "Description",
-                  taskTitle: 'Task 1',
+                  taskDescription: widget.todoList[index].description ?? "",
+                  taskTitle: widget.todoList[index].title ?? "",
                   index: index,
                 ),
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 10),
-                itemCount: 10,
+                itemCount: widget.todoList.length,
               ),
 
               const SizedBox(height: 100),
