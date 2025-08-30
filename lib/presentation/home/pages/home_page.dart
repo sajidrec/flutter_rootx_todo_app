@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:rootxsoftware_todo_app/presentation/create_update_task/controllers/create_update_controller.dart';
 import 'package:rootxsoftware_todo_app/presentation/home/controllers/checkbox_controller.dart';
 import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
@@ -42,19 +40,29 @@ class _HomePageState extends State<HomePage> {
             children: [
               GetBuilder<SplashScreenController>(
                 builder: (controller) {
-                  return ListView.separated(
-                    primary: false,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => _buildTask(
-                      taskDescription:
-                          controller.todoList[index].description ?? "",
-                      taskTitle: controller.todoList[index].title ?? "",
-                      index: index,
-                    ),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 10),
-                    itemCount: controller.todoList.length,
-                  );
+                  return controller.todoList.isEmpty
+                      ? Center(
+                          child: Text(
+                            "No data",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: AppColors.primaryWhite,
+                            ),
+                          ),
+                        )
+                      : ListView.separated(
+                          primary: false,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => _buildTask(
+                            taskDescription:
+                                controller.todoList[index].description ?? "",
+                            taskTitle: controller.todoList[index].title ?? "",
+                            index: index,
+                          ),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 10),
+                          itemCount: controller.todoList.length,
+                        );
                 },
               ),
 
