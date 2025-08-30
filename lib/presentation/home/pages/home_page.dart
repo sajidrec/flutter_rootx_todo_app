@@ -80,6 +80,8 @@ class HomePage extends StatelessWidget {
                 arguments: {
                   "appbarTitle": "Update Todo",
                   "buttonText": "Update",
+                  "titleText": taskTitle,
+                  "descriptionText": taskDescription,
                 },
               );
             },
@@ -121,6 +123,8 @@ class HomePage extends StatelessWidget {
             arguments: {
               "appbarTitle": "Create New Todo",
               "buttonText": "Create",
+              "titleText": "",
+              "descriptionText": "",
             },
           );
         },

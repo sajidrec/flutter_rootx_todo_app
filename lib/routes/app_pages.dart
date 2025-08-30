@@ -10,8 +10,12 @@ class AppPages {
     GetPage(name: AppRoutes.homeRoute, page: () => HomePage()),
     GetPage(
       name: AppRoutes.createUpdateRoute,
-      page: () =>
-          CreateUpdateTaskPage(appbarTitle: Get.arguments['appbarTitle'], buttonText: Get.arguments['buttonText'],),
+      page: () => CreateUpdateTaskPage(
+        appbarTitle: Get.arguments['appbarTitle'],
+        buttonText: Get.arguments['buttonText'],
+        titleText: Get.arguments['titleText'],
+        descriptionText: Get.arguments['descriptionText'],
+      ),
     ),
   ];
 }

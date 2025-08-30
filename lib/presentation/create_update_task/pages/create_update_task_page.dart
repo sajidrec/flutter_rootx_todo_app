@@ -6,10 +6,14 @@ class CreateUpdateTaskPage extends StatefulWidget {
     super.key,
     required this.appbarTitle,
     required this.buttonText,
+    required this.titleText,
+    required this.descriptionText,
   });
 
   final String appbarTitle;
   final String buttonText;
+  final String titleText;
+  final String descriptionText;
 
   @override
   State<CreateUpdateTaskPage> createState() => _CreateUpdateTaskPageState();
@@ -25,6 +29,13 @@ class _CreateUpdateTaskPageState extends State<CreateUpdateTaskPage> {
     _titleTEC.dispose();
     _descriptionTEC.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _titleTEC.text = widget.titleText;
+    _descriptionTEC.text = widget.descriptionText;
   }
 
   @override
