@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rootxsoftware_todo_app/presentation/home/controllers/checkbox_controller.dart';
 import 'package:rootxsoftware_todo_app/routes/app_routes.dart';
 import 'package:rootxsoftware_todo_app/theme/app_colors.dart';
 
+import '../../create_update_task/controllers/create_update_controller.dart';
 import '../../splash/controllers/splash_screen_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -53,15 +53,17 @@ class _HomePageState extends State<HomePage> {
                       : ListView.separated(
                           primary: false,
                           shrinkWrap: true,
-                          itemBuilder: (context, index) => _buildTask(
-                            taskDescription:
-                                controller.todoList[index].description ?? "",
-                            taskTitle: controller.todoList[index].title ?? "",
-                            index: index,
-                          ),
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 10),
                           itemCount: controller.todoList.length,
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 10),
+                          itemBuilder: (context, index) {
+                            final todo = controller.todoList[index];
+                            return _buildTask(
+                              index: index,
+                              taskTitle: todo.title ?? "",
+                              taskDescription: todo.description ?? "",
+                            );
+                          },
                         );
                 },
               ),
@@ -76,42 +78,43 @@ class _HomePageState extends State<HomePage> {
   }
 
   ListTile _buildTask({
-    String taskDescription = "",
-    required String taskTitle,
     required int index,
+    required String taskTitle,
+    required String taskDescription,
   }) {
-    return ListTile(
-      leading: GetBuilder<CheckboxController>(
-        builder: (controller) {
-          return Checkbox(
-            value: controller.isChecked,
-            side: BorderSide(color: AppColors.primaryWhite, width: 2),
-            onChanged: (value) => controller.toggleCheckbox(),
-            checkColor: AppColors.primaryWhite,
-            activeColor: AppColors.primaryOrange,
-          );
-        },
-      ),
-      title: GetBuilder<CheckboxController>(
-        builder: (controller) {
-          return Text(
-            taskTitle,
-            style: TextStyle(
-              color: AppColors.primaryWhite,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              overflow: TextOverflow.ellipsis,
-              decorationThickness: 2,
-              decorationColor: AppColors.primaryOrange,
-              decoration: controller.isChecked
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none,
-            ),
-            maxLines: 1,
-          );
-        },
-      ),
+    final controller = Get.find<SplashScreenController>();
+    final todo = controller.todoList[index];
 
+    return ListTile(
+      leading: Checkbox(
+        value: todo.isDone ?? false,
+        side: BorderSide(color: AppColors.primaryWhite, width: 2),
+        onChanged: (value) async {
+          // Toggle the checkbox and update Hive
+          final createUpdateController = Get.find<CreateUpdateController>();
+          await createUpdateController.toggleTodoDone(index: index);
+
+          // Refresh the todo list from Hive
+          await controller.fetchData();
+        },
+        checkColor: AppColors.primaryWhite,
+        activeColor: AppColors.primaryOrange,
+      ),
+      title: Text(
+        taskTitle,
+        style: TextStyle(
+          color: AppColors.primaryWhite,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          overflow: TextOverflow.ellipsis,
+          decorationThickness: 2,
+          decorationColor: AppColors.primaryOrange,
+          decoration: (todo.isDone ?? false)
+              ? TextDecoration.lineThrough
+              : TextDecoration.none,
+        ),
+        maxLines: 1,
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
