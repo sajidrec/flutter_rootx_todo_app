@@ -74,7 +74,15 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.delete, color: AppColors.primaryWhite),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(
+                AppRoutes.createUpdateRoute,
+                arguments: {
+                  "appbarTitle": "Update Todo",
+                  "buttonText": "Update",
+                },
+              );
+            },
             icon: Icon(Icons.edit, color: AppColors.primaryWhite),
           ),
           IconButton(
@@ -110,7 +118,10 @@ class HomePage extends StatelessWidget {
         onTap: () {
           Get.toNamed(
             AppRoutes.createUpdateRoute,
-            arguments: {"appbarTitle": "Create New Todo"},
+            arguments: {
+              "appbarTitle": "Create New Todo",
+              "buttonText": "Create",
+            },
           );
         },
         child: CircleAvatar(

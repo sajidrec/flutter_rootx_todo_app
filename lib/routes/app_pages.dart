@@ -11,7 +11,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.createUpdateRoute,
       page: () =>
-          CreateUpdateTaskPage(appbarTitle: Get.arguments['appbarTitle']),
+          CreateUpdateTaskPage(appbarTitle: Get.arguments['appbarTitle'], buttonText: Get.arguments['buttonText'],),
     ),
   ];
 }
