@@ -71,7 +71,7 @@ class _CreateUpdateTaskPageState extends State<CreateUpdateTaskPage> {
                             color: AppColors.primaryWhite,
                           ),
                         ),
-                        maxLength: 20,
+                        maxLength: 30,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
