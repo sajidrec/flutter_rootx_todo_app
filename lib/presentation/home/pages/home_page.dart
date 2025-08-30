@@ -21,7 +21,19 @@ class HomePage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              _buildTask(taskDescription: "Description", taskTitle: 'Task 1'),
+              ListView.separated(
+                primary: false,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => _buildTask(
+                  taskDescription: "Description",
+                  taskTitle: 'Task 1',
+                ),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 10),
+                itemCount: 1,
+              ),
+
+              const SizedBox(height: 100),
             ],
           ),
         ),
@@ -69,46 +81,82 @@ class HomePage extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete, color: AppColors.primaryWhite),
-          ),
-          IconButton(
-            onPressed: () {
-              Get.toNamed(
-                AppRoutes.createUpdateRoute,
-                arguments: {
-                  "appbarTitle": "Update Todo",
-                  "buttonText": "Update",
-                  "titleText": taskTitle,
-                  "descriptionText": taskDescription,
-                },
-              );
-            },
-            icon: Icon(Icons.edit, color: AppColors.primaryWhite),
-          ),
-          IconButton(
-            onPressed: () {
-              Get.defaultDialog(
-                backgroundColor: AppColors.primaryWhite,
-                middleText: taskDescription,
-                title: "Full description",
-                cancel: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryOrange,
-                    foregroundColor: AppColors.primaryWhite,
-                  ),
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: Text("Close"),
-                ),
-              );
-            },
-            icon: Icon(Icons.remove_red_eye, color: AppColors.primaryWhite),
-          ),
+          _buildDeleteButton(),
+          _buildEditButton(taskTitle, taskDescription),
+          _buildViewButton(taskDescription),
         ],
       ),
+    );
+  }
+
+  IconButton _buildViewButton(String taskDescription) {
+    return IconButton(
+      onPressed: () {
+        Get.defaultDialog(
+          backgroundColor: AppColors.primaryWhite,
+          middleText: taskDescription,
+          title: "Full description",
+          cancel: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryOrange,
+              foregroundColor: AppColors.primaryWhite,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+            child: Text("Close"),
+          ),
+        );
+      },
+      icon: Icon(Icons.remove_red_eye, color: AppColors.primaryWhite),
+    );
+  }
+
+  IconButton _buildEditButton(String taskTitle, String taskDescription) {
+    return IconButton(
+      onPressed: () {
+        Get.toNamed(
+          AppRoutes.createUpdateRoute,
+          arguments: {
+            "appbarTitle": "Update Todo",
+            "buttonText": "Update",
+            "titleText": taskTitle,
+            "descriptionText": taskDescription,
+          },
+        );
+      },
+      icon: Icon(Icons.edit, color: AppColors.primaryWhite),
+    );
+  }
+
+  IconButton _buildDeleteButton() {
+    return IconButton(
+      onPressed: () {
+        Get.defaultDialog(
+          title: "Delete Task",
+          middleText: "Are you sure you want to delete this task?",
+          backgroundColor: AppColors.primaryWhite,
+          titleStyle: TextStyle(
+            color: AppColors.primaryDark,
+            fontWeight: FontWeight.bold,
+          ),
+          middleTextStyle: TextStyle(color: AppColors.primaryDark),
+          textCancel: "Cancel",
+          textConfirm: "Delete",
+          cancelTextColor: AppColors.primaryDark,
+          confirmTextColor: AppColors.primaryWhite,
+          buttonColor: AppColors.primaryOrange,
+          radius: 12,
+          onConfirm: () {
+            // perform delete action here
+            Get.back(); // close dialog
+          },
+          onCancel: () {
+            Get.back(); // close dialog
+          },
+        );
+      },
+      icon: Icon(Icons.delete, color: AppColors.primaryWhite),
     );
   }
 
